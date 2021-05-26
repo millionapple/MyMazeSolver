@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>Hello</h1>
+<form action="GetMazeServlet" mehtod="GET" name="update" id="updateForm">
+   	<table>
+   		<tr><td>Reservation ID:<input name="resId" type="number" id="resId" readonly></td></tr>
+   		<tr><td>Full Name: <input id="name" type="text" name="username" required/></td></tr>
+    	<tr><td>Email: <input id="email" type="email" name="email" placeholder="my@email.com"/></td></tr>
+    	<tr><td>Phone: <input id="phone" type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="xxx-xxx-xxxx"/></td></tr>
+    	<tr><td>Arrival Date:<input id="arrival" type="date" name="arrival" required/></td></tr>
+    	<tr><td>Departure Date:<input id="departure" type="date" name="departure" required/></td></tr>
+    	<tr><td>Rooms:<br/>
+		    <input type="checkbox" name="room1" value="1">
+		    <label for="room1">1</label>
+		    <input type="checkbox" name="room2" value="2">
+		    <label for="room2">2</label>
+		    <input type="checkbox" name="room3" value="3">
+		    <label for="room3">3</label>
+		    <input type="checkbox" name="room4" value="4">
+		    <label for="room4">4</label><br>
+		    <input type="checkbox" name="room5" value="5">
+		    <label for="room5">5</label>
+		    <input type="checkbox" name="room6" value="6">
+		    <label for="room6">6</label>
+		    <input type="checkbox" name="room7" value="7">
+		    <label for="room7">7</label>
+		    <input type="checkbox" name="room8" value="8">
+		    <label for="room8">8</label><br>
+    	</td></tr>
+    	<tr><td><input type="submit" value="update"/></td></tr>
+    </table>
+   	</form>
+</body>
+</html>
