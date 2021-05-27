@@ -1,7 +1,11 @@
 package beans;
 
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
 import static org.junit.Assert.*;
+
+import org.junit.Rule;
 
 public class GridTest {
 	@Test
@@ -60,5 +64,20 @@ public class GridTest {
 		newGrid = grid.changeGrid(1, 1, newGrid, 3);
 		
 		assertArrayEquals(expected, newGrid);
+	}
+	
+	 @Rule
+	 public ExpectedException exception = ExpectedException.none();
+	
+	@Test
+	public void changeGridTakesInHigherThanGridValueTest() {
+		exception.expect(ArrayIndexOutOfBoundsException.class);
+		Grid grid = new Grid();
+		grid.setGridWidth(10);
+		grid.setGridHeight(10);
+		int[][] newGrid = grid.createGrid();
+		
+		grid.changeGrid(11, 11, newGrid, 1);
+		
 	}
 }
