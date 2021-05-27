@@ -13,12 +13,9 @@ public class GetMazeServlet extends HttpServlet {
     
     public GetMazeServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-
+    //this method is used to get information about the grid the user inputs from the front end
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		System.out.println(request.getParameter("gridWidth"));
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		response.sendRedirect("index.html");

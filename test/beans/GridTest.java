@@ -32,7 +32,7 @@ public class GridTest {
 		assertArrayEquals(expected, result);
 	}
 	@Test
-	public void changeGrid() {
+	public void changeGridTest() {
 		Grid grid = new Grid();
 		grid.setGridWidth(10);
 		grid.setGridHeight(10);
@@ -43,5 +43,22 @@ public class GridTest {
 		int[][] result = grid.changeGrid(0, 1, newGrid, 1);
 		
 		assertArrayEquals(expected, result);
+	}
+	@Test
+	public void changeGridMultipleValuesTest() {
+		Grid grid = new Grid();
+		grid.setGridWidth(10);
+		grid.setGridHeight(10);
+		int[][] newGrid = grid.createGrid();
+		int[][] expected = new int[10][10];
+		expected[9][1] = 2;
+		expected[5][0] = 1;
+		expected[1][1] = 3;
+		
+		newGrid = grid.changeGrid(9, 1, newGrid, 2);
+		newGrid = grid.changeGrid(5, 0, newGrid, 1);
+		newGrid = grid.changeGrid(1, 1, newGrid, 3);
+		
+		assertArrayEquals(expected, newGrid);
 	}
 }
