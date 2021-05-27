@@ -10,17 +10,38 @@ public class GridTest {
 	}
 	@Test
 	public void createGridCreatesArray() {
+		Grid grid = new Grid();
+		grid.setGridWidth(10);
+		grid.setGridHeight(10);
 		int[][] expected = new int[10][10];
-		int width = 10;
-		int height = 10;
 		
-		int[][] result = createGrid(width, height);
+		int[][] result = grid.createGrid();
 		
 		assertArrayEquals(expected, result);
 		
 	}
-	private int[][] createGrid(int width, int height) {
-		int[][] gridForMaze = new int[width][height];
-		return gridForMaze;
+	@Test
+	public void createGridCreatesArrayGreaterHieght() {
+		Grid grid = new Grid();
+		grid.setGridWidth(7);
+		grid.setGridHeight(10);
+		int[][] expected = new int[7][10];
+		
+		int[][] result = grid.createGrid();
+		
+		assertArrayEquals(expected, result);
+	}
+	@Test
+	public void changeGrid() {
+		Grid grid = new Grid();
+		grid.setGridWidth(10);
+		grid.setGridHeight(10);
+		int[][] newGrid = grid.createGrid();
+		int[][] expected = new int[10][10];
+		expected[0][1] = 1;
+		
+		int[][] result = grid.changeGrid(0, 1, newGrid, 1);
+		
+		assertArrayEquals(expected, result);
 	}
 }
