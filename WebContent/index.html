@@ -3,14 +3,21 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Welcome to the Maze Program</title>
+<script src="grid.js"></script>
 </head>
 <body>
 <h1>Hello</h1>
-<form action="GetMazeServlet" mehtod="GET" name="update" id="updateForm">
+<form onsubmit="hello()">
+	<table>
+		<tr><td>Name: <input name="name" type="text" id="name"></td></tr>
+		<tr><td><input type="submit" value="hello"></td></tr>
+	</table>
+</form>
+<form name="createGrid" id="updateForm" onsubmit="createGrid()">
    	<table>
    		<tr><td>What is the width of the maze?<input name="gridWidth" type="number" id="gridWidth"></td></tr>
    		<tr><td>What is the height of the maze?<input name="gridHeight" type="number" id="gridHeight"></td></tr>
-    	<tr><td><input type="submit" value="update"/></td></tr>
+    	<tr><td><input type="submit" value="Create Grid"/></td></tr>
     </table>
    	</form>
 </body>

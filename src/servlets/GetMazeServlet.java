@@ -20,6 +20,9 @@ public class GetMazeServlet extends HttpServlet {
     }
     //this method is used to get information about the grid the user inputs from the front end
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Grid grid = new Grid();
 		ObjectMapper objectMapper = new ObjectMapper();
 		grid.setGridWidth(Integer.parseInt(request.getParameter("gridWidth")));
@@ -27,11 +30,6 @@ public class GetMazeServlet extends HttpServlet {
 		int[][] gridMap = grid.createGrid();
 		response.getWriter().write(objectMapper.writeValueAsString(gridMap));
 		response.getWriter().append(gridMap.toString());
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }
