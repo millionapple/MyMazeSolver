@@ -1,6 +1,9 @@
 package servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,11 +28,27 @@ public class GetMazeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Grid grid = new Grid();
 		ObjectMapper objectMapper = new ObjectMapper();
+//		paramNames(request, response);
 		grid.setGridWidth(Integer.parseInt(request.getParameter("gridWidth")));
 		grid.setGridHeight(Integer.parseInt(request.getParameter("gridHeight")));
 		int[][] gridMap = grid.createGrid();
 		response.getWriter().write(objectMapper.writeValueAsString(gridMap));
-		response.getWriter().append(gridMap.toString());
+	}
+	protected void paramNames(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+			System.out.println("Hello: "+req.getParameterNames().toString());
+	        Enumeration<String> parameterNames = req.getParameterNames();
+	        while (parameterNames.hasMoreElements()) {
+	 
+	            String paramName = parameterNames.nextElement();
+	            System.out.println("ParamName: "+paramName);
+	 
+	            String[] paramValues = req.getParameterValues(paramName);
+	            for (int i = 0; i < paramValues.length; i++) {
+	                String paramValue = paramValues[i];
+	                System.out.println("ParamValue: "+paramValue);
+	            }
+	 
+	        }
 	}
 
 }
