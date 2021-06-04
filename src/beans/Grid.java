@@ -18,13 +18,13 @@ public class Grid {
 	}
 	
 	public int[][] createGrid() {
-		int[][] gridForMaze = new int[gridWidth][gridHeight];
+		int[][] gridForMaze = new int[gridHeight][gridWidth];
 		return gridForMaze;
 	}
 	
 	public int[][] changeGrid(int width, int height, int[][] gridForMaze, int valueOfChange) {
 		int[][] changedGrid = gridForMaze;
-		changedGrid[width][height] = valueOfChange;
+		changedGrid[height][width] = valueOfChange;
 		return changedGrid;
 	}
 }

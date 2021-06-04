@@ -25,8 +25,8 @@ public class GetMazeServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Grid grid = new Grid();
 		ObjectMapper objectMapper = new ObjectMapper();
-		grid.setGridWidth(Integer.parseInt(request.getParameter("gridWidth")));
 		grid.setGridHeight(Integer.parseInt(request.getParameter("gridHeight")));
+		grid.setGridWidth(Integer.parseInt(request.getParameter("gridWidth")));
 		int[][] gridMap = grid.createGrid();
 		response.getWriter().write(objectMapper.writeValueAsString(gridMap));
 	}
