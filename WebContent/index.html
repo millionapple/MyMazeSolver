@@ -6,10 +6,11 @@
 <script src="grid.js"></script>
 </head>
 <body>
-<h1>Hello</h1>
-<button onclick="setToWall">Wall Block</button>
-<button onclick="setToStart">Start Block</button>
-<button onclick="setToEnd">End Block</button>
+<h1 onclick="changeGrid()">Hello</h1>
+<button onclick="setToWall()">Wall Block</button>
+<button onclick="setToStart()">Start Block</button>
+<button onclick="setToEnd()">End Block</button>
+<button onclick="setToPath()">Path Block</button>
    	<table>
    		<tr><td>What is the width of the maze?<input name="gridWidth" type="number" id="gridWidth"></td></tr>
    		<tr><td>What is the height of the maze?<input name="gridHeight" type="number" id="gridHeight"></td></tr>
