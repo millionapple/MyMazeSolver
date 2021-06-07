@@ -17,6 +17,7 @@ function getWidthAndHeight(){
 	const height = document.getElementById("gridHeight").value;
 	sendWidthAndHeight(width, height);
 }
+
 function constructGrid(reqs){
 	var grid = document.getElementById("grid");
 	console.log(reqs[0].length);
@@ -35,4 +36,20 @@ function constructGrid(reqs){
 			console.log(reqs[row][column]);
 		}
 	}
+}
+
+function setToWall(){
+	
+}
+
+function setToStart(){
+	
+}
+
+function setToEnd(){
+	
+}
+
+function changeGrid(){
+	
 }
