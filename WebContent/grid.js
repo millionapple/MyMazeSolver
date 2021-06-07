@@ -47,11 +47,21 @@ function showButtons(){
 	document.getElementById("gridSetup").style.display = "none";
 }
 
+var path = true;
 var wall = false;
 var start = false;
 var end = false;
-var path = true;
 
+function setToPath(){
+	event.target.style.backgroundColor ="#999999";
+	document.getElementById("setWall").style.backgroundColor = "#efefef";
+	document.getElementById("setStart").style.backgroundColor = "#efefef";
+	document.getElementById("setEnd").style.backgroundColor = "#efefef";
+	wall = false;
+	start = false;
+	end = false;
+	path = true;
+}
 function setToWall(){
 	event.target.style.backgroundColor ="#999999";
 	document.getElementById("setStart").style.backgroundColor = "#efefef";
@@ -82,19 +92,9 @@ function setToEnd(){
 	end = true;
 	path = false;
 }
-function setToPath(){
-	event.target.style.backgroundColor ="#999999";
-	document.getElementById("setWall").style.backgroundColor = "#efefef";
-	document.getElementById("setStart").style.backgroundColor = "#efefef";
-	document.getElementById("setEnd").style.backgroundColor = "#efefef";
-	wall = false;
-	start = false;
-	end = false;
-	path = true;
-}
+
 
 function changeGrid(){
-	console.log(event.target);
 	if(path){
 		addPathToGrid(event.target);
 	}else if(wall){
