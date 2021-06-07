@@ -1,7 +1,6 @@
 package servlets;
 
 import java.io.IOException;
-import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import solver.GridSolver;
 
 @WebServlet("/SolveMazeServlet")
 public class SolveMazeServlet extends HttpServlet {
@@ -22,9 +23,10 @@ public class SolveMazeServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ObjectMapper objectMapper = new ObjectMapper();
+		GridSolver solver = new GridSolver();
 		int[][] grid = objectMapper.readValue(request.getParameter("grid"), int[][].class);
-		System.out.println(grid[1][1]);
-		response.getWriter().write(objectMapper.writeValueAsString(grid));
+		int[][] solvedGrid = solver.solveGrid(grid);
+		response.getWriter().write(objectMapper.writeValueAsString(solvedGrid));
 	}
 
 }

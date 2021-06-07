@@ -44,6 +44,7 @@ function showButtons(){
 	document.getElementById("setEnd").style.display = "inline-block";
 	document.getElementById("setPath").style.display = "inline-block";
 	document.getElementById("solveMaze").style.display = "inline-block";
+	document.getElementById("gridSetup").style.display = "none";
 }
 
 var wall = false;
@@ -52,24 +53,40 @@ var end = false;
 var path = true;
 
 function setToWall(){
+	event.target.style.backgroundColor ="#999999";
+	document.getElementById("setStart").style.backgroundColor = "#efefef";
+	document.getElementById("setEnd").style.backgroundColor = "#efefef";
+	document.getElementById("setPath").style.backgroundColor = "#efefef";
 	wall = true;
 	start = false;
 	end = false;
 	path = false;
 }
 function setToStart(){
+	event.target.style.backgroundColor ="#999999";
+	document.getElementById("setWall").style.backgroundColor = "#efefef";
+	document.getElementById("setEnd").style.backgroundColor = "#efefef";
+	document.getElementById("setPath").style.backgroundColor = "#efefef";
 	wall = false;
 	start = true;
 	end = false;
 	path = false;
 }
 function setToEnd(){
+	event.target.style.backgroundColor ="#999999";
+	document.getElementById("setWall").style.backgroundColor = "#efefef";
+	document.getElementById("setStart").style.backgroundColor = "#efefef";
+	document.getElementById("setPath").style.backgroundColor = "#efefef";
 	wall = false;
 	start = false;
 	end = true;
 	path = false;
 }
 function setToPath(){
+	event.target.style.backgroundColor ="#999999";
+	document.getElementById("setWall").style.backgroundColor = "#efefef";
+	document.getElementById("setStart").style.backgroundColor = "#efefef";
+	document.getElementById("setEnd").style.backgroundColor = "#efefef";
 	wall = false;
 	start = false;
 	end = false;
