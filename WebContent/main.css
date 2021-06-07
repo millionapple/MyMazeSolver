@@ -1,0 +1,4 @@
+@charset "ISO-8859-1";
+#setWall, #setStart, #setEnd, #setPath, #solveMaze{
+	display: none;
+}

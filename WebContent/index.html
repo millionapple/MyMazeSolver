@@ -4,13 +4,15 @@
 <meta charset="ISO-8859-1">
 <title>Welcome to the Maze Program</title>
 <script src="grid.js"></script>
+<link rel="stylesheet" href="main.css">
 </head>
 <body>
-<h1 onclick="changeGrid()">Hello</h1>
-<button onclick="setToWall()">Wall Block</button>
-<button onclick="setToStart()">Start Block</button>
-<button onclick="setToEnd()">End Block</button>
-<button onclick="setToPath()">Path Block</button>
+<h1 id="changeGrid" onclick="changeGrid()">Hello</h1>
+<button id="setWall" onclick="setToWall()">Wall Block</button>
+<button id="setStart" onclick="setToStart()">Start Block</button>
+<button id="setEnd" onclick="setToEnd()">End Block</button>
+<button id="setPath" onclick="setToPath()">Path Block</button>
+<button id="solveMaze" onclick="solveGrid()">Solve Maze</button>
    	<table>
    		<tr><td>What is the width of the maze?<input name="gridWidth" type="number" id="gridWidth"></td></tr>
    		<tr><td>What is the height of the maze?<input name="gridHeight" type="number" id="gridHeight"></td></tr>

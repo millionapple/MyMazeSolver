@@ -21,6 +21,7 @@ function getWidthAndHeight(){
 }
 
 function constructGrid(reqs){
+	showButtons();
 	var grid = document.getElementById("grid");
 	for(var row=0; row < reqs.length; row++){
 		var gridRow = document.createElement("tr");
@@ -36,6 +37,13 @@ function constructGrid(reqs){
 			gridRow.appendChild(gridData);
 		}
 	}
+}
+function showButtons(){
+	document.getElementById("setWall").style.display = "inline-block";
+	document.getElementById("setStart").style.display = "inline-block";
+	document.getElementById("setEnd").style.display = "inline-block";
+	document.getElementById("setPath").style.display = "inline-block";
+	document.getElementById("solveMaze").style.display = "inline-block";
 }
 
 var wall = false;
@@ -123,4 +131,19 @@ function checkGrid(value){
 		}
 	}
 	return false;
+}
+
+function solveGrid(){
+	console.log("sending to solve the maze");
+	var xhttp = new XMLHttpRequest();
+	  xhttp.onreadystatechange = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    	let reqs = this.responseText;
+	         reqs = JSON.parse(reqs);
+	         console.log(reqs);
+	    }
+	  };
+	  xhttp.open("POST", "SolveMazeServlet", true);
+	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	  xhttp.send("grid="+JSON.stringify(grid));
 }
