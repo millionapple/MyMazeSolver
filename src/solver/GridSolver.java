@@ -3,35 +3,45 @@ package solver;
 public class GridSolver {
 	public int[][] solveGrid(int[][] grid){
 			boolean hasStartAndEnd = gridHasStartAndEnd(grid);
+			boolean startOrEndWalledOff = checkStartOrEndWalledOff(grid);
 			return grid;
 		}
 
 	public boolean gridHasStartAndEnd(int[][] grid) {
 		boolean hasStart = false;
 		boolean hasEnd = false;
-		for(int row = 0; row < grid.length; row++) {
-			for(int column = 0; column < grid[row].length; column++) {
-				if(grid[row][column] == 2) {
-					hasStart = true;
-				}else if(grid[row][column] == 3) {
-					hasEnd = true;
-				}
-			}
-		}
+		int[] startRowAndCol = findStartOrEnd(grid, 2);
+		int[] endRowAndCol = findStartOrEnd(grid, 3);
+		hasStart = startRowAndCol[0] == -1 || startRowAndCol[1] == -1 ? false : true;
+		hasEnd = endRowAndCol[0] == -1 || endRowAndCol[1] == -1 ? false : true;
+		
 		return hasStart == true && hasEnd == true;
 	}
-	public boolean checkAllNeighbors(int[][] grid) {
-		boolean startPath = true;
-		boolean endPath = true;
+	public int[] findStartOrEnd(int[][] grid, int value) {
+		int[] rowAndColumn = new int[2];
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
-				if(grid[row][column] == 2) {
-					startPath = isPath(row, column, grid);
-				}else if(grid[row][column] == 3) {
-					endPath = isPath(row, column, grid);
+				if(grid[row][column] == value) {
+					rowAndColumn[0] = row;
+					rowAndColumn[1] = column;
+					return rowAndColumn;
+				}else {
+					rowAndColumn[0] = -1;
+					rowAndColumn[1] = -1;
 				}
 			}
 		}
+		return rowAndColumn;
+	}
+	
+
+	public boolean checkStartOrEndWalledOff(int[][] grid) {
+		boolean startPath = true;
+		boolean endPath = true;
+		int[] startRowAndCol = findStartOrEnd(grid, 2);
+		int[] endRowAndCol = findStartOrEnd(grid, 3);
+		startPath = isPath(startRowAndCol[0], startRowAndCol[1], grid);
+		endPath = isPath(endRowAndCol[0], endRowAndCol[1], grid);
 		return startPath == false || endPath == false ? false : true;
 	}
 	public boolean isPath(int row, int column, int[][] grid) {
@@ -42,4 +52,5 @@ public class GridSolver {
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : +0;
 		return numOfWalls == 4 ? false : true;
 	}
+	
 }
