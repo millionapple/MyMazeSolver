@@ -3,7 +3,14 @@ package solver;
 public class GridSolver {
 	public int[][] solveGrid(int[][] grid){
 			boolean hasStartAndEnd = gridHasStartAndEnd(grid);
-			boolean startOrEndWalledOff = checkStartOrEndWalledOff(grid);
+			boolean startOrEndNotWalledOff = checkStartOrEndWalledOff(grid);
+			if(hasStartAndEnd && startOrEndNotWalledOff) {
+				//the idea that I have come up with is go through the array and wherever a 0 is replace that with a 
+				// 5 to represent the head of the path then replace that with a 4 when it moves on. starting at start.
+				int[] startRowAndCol = findStartOrEnd(grid, 2);
+				int[] currentRowAndCol = startRowAndCol;
+				
+			}
 			return grid;
 		}
 
@@ -34,7 +41,6 @@ public class GridSolver {
 		return rowAndColumn;
 	}
 	
-
 	public boolean checkStartOrEndWalledOff(int[][] grid) {
 		boolean startPath = true;
 		boolean endPath = true;
@@ -53,4 +59,33 @@ public class GridSolver {
 		return numOfWalls == 4 ? false : true;
 	}
 	
+	public int[][] move(int[][] grid, int[] currentRowAndCol){
+		int row = currentRowAndCol[0];
+		int column = currentRowAndCol[1];
+		if(grid[row][column] == 5) {
+			grid[row][column] = 4;
+		}
+		if(row-1 >= 0 && grid[row-1][column] == 0) {
+			currentRowAndCol[0] = row - 1;
+			currentRowAndCol[1] = column;
+			grid[row-1][column] = 5;
+			move(grid, currentRowAndCol);
+		}else if(column+1 <= grid[row].length && grid[row][column+1] == 0) {
+			currentRowAndCol[0] = row;
+			currentRowAndCol[1] = column+1;
+			grid[row][column+1] = 5;
+			move(grid, currentRowAndCol);
+		}else if(row+1 <= grid.length && grid[row+1][column] == 0) {
+			currentRowAndCol[0] = row+1;
+			currentRowAndCol[1] = column;
+			grid[row+1][column] = 5;
+			move(grid, currentRowAndCol);
+		}else if(column-1 >= 0 && grid[row][column-1] == 0) {
+			currentRowAndCol[0] = row;
+			currentRowAndCol[1] = column-1;
+			grid[row][column-1] = 5;
+			move(grid, currentRowAndCol);
+		}
+		return grid;
+	}
 }

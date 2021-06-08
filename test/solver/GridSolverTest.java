@@ -1,5 +1,6 @@
 package solver;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -160,5 +161,28 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
+
+	@Test
+	public void testingMoveCanMove() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		int[] start = new int[]{0, 0};
+		grid[0][0] = 2;
+		grid[2][3] = 3;
+		grid[1][0] = 1;
+		grid[1][1] = 1;
+		grid[1][2] = 1;
+		grid[2][2] = 1;
+		int[][] expected = grid;
+		expected[0][1] = 4;
+		expected[0][2] = 4;
+		expected[0][3] = 4;
+		expected[1][3] = 4;
+		
+		int[][] result = gridSolver.move(grid, start);
+		
+		assertArrayEquals(expected, result);
+	}
+	
 }
 
