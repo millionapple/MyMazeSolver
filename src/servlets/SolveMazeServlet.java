@@ -18,7 +18,6 @@ public class SolveMazeServlet extends HttpServlet {
 
     public SolveMazeServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

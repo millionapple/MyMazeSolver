@@ -158,9 +158,22 @@ function solveGrid(){
 	    	let reqs = this.responseText;
 	         reqs = JSON.parse(reqs);
 	         console.log(reqs);
+	         fillPath(reqs);
 	    }
 	  };
 	  xhttp.open("POST", "SolveMazeServlet", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	  xhttp.send("grid="+JSON.stringify(grid));
+}
+
+function fillPath(grid){
+	for(var row = 0; row < grid.length; row++){
+		for(var column = 0; column < grid[row].length; column++){
+			if(grid[row][column] == 4){
+				var rowElement = document.getElementById("row"+row);
+				var columnElement = rowElement.childNodes[column];
+				columnElement.style.backgroundColor = "blue";
+			}
+		}
+	}
 }

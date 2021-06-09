@@ -173,16 +173,92 @@ public class GridSolverTest {
 		grid[1][1] = 1;
 		grid[1][2] = 1;
 		grid[2][2] = 1;
-		int[][] expected = grid;
+		int[][] expected = new int[4][4];
+		expected[0][0] = 2;
+		expected[2][3] = 3;
+		expected[1][0] = 1;
+		expected[1][1] = 1;
+		expected[1][2] = 1;
+		expected[2][2] = 1;
 		expected[0][1] = 4;
 		expected[0][2] = 4;
 		expected[0][3] = 4;
 		expected[1][3] = 4;
 		
+		System.out.println("Testing Move can Move");
 		int[][] result = gridSolver.move(grid, start);
 		
 		assertArrayEquals(expected, result);
 	}
-	
+
+	@Test
+	public void unsolvableMaze() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		int[] start = new int[]{0, 0};
+		grid[0][0] = 2;
+		grid[2][3] = 3;
+		grid[1][0] = 1;
+		grid[1][1] = 1;
+		grid[1][2] = 1;
+		grid[2][2] = 1;
+		grid[0][3] = 1;
+		int[][] expected = new int[4][4];
+		expected[0][0] = 2;
+		expected[2][3] = 3;
+		expected[1][0] = 1;
+		expected[1][1] = 1;
+		expected[1][2] = 1;
+		expected[2][2] = 1;
+		expected[0][1] = 4;
+		expected[0][2] = 4;
+		expected[0][3] = 1;
+		expected[1][3] = 0;
+		
+		System.out.println("Unsolvable Maze");
+		int[][] result = gridSolver.move(grid, start);
+		
+		assertArrayEquals(expected, result);
+	}
+
+	@Test 
+	public void differentMaze() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[5][5];
+		int[] start = new int[]{1, 0};
+		for(int i=0; i<grid[0].length; i++) {
+			grid[0][i] =1;
+		}
+		grid[1][0] = 2;
+		grid[1][1] = 1;
+		grid[2][1] = 1;
+		grid[2][3] = 1;
+		grid[3][1] = 1;
+		grid[3][3] = 1;
+		grid[4][3] = 1;
+		grid[4][4] = 3;
+		int[][] expected = new int[5][5];
+		for(int row = 0; row < expected.length; row++) {
+			for(int column = 0; column < expected[row].length; column++) {
+				expected[row][column] = 4;
+			}
+		}
+		for(int i=0; i<expected[0].length; i++) {
+			expected[0][i] =1;
+		}
+		expected[1][0] = 2;
+		expected[1][1] = 1;
+		expected[2][1] = 1;
+		expected[2][3] = 1;
+		expected[3][1] = 1;
+		expected[3][3] = 1;
+		expected[4][3] = 1;
+		expected[4][4] = 3;
+		
+		System.out.println("Different Maze Test");
+		int[][] result = gridSolver.move(grid, start);
+		
+		assertArrayEquals(expected, result);
+	}
 }
 
