@@ -187,4 +187,31 @@ function fillPath(grid){
 			}
 		}
 	}
+	setTimeout(function(){mazeComplete(grid)}, 1000);
+}
+function mazeComplete(grid){
+	var end = getBlockBySpecificValue(3);
+	var endRow = end[0];
+	var endColumn = end[1];
+	if(endRow - 1 >= 0 && grid[endRow-1][column] == 4){
+		window.alert("Maze Complete");
+	}else if(endColumn+1 < grid[endRow].length && grid[endRow][endColumn+1] == 4){
+		window.alert("Maze Complete");
+	}else if(endRow+1 < grid.length && grid[endRow+1][endColumn] == 4){
+		window.alert("Maze Complete");
+	}else if(endColumn-1 >= 0 && grid[endRow][endColumn-1] == 4){
+		window.alert("Maze Complete");
+	}else{
+		window.alert("Could not Find the end");
+	}
+}
+function getBlockBySpecificValue(value){
+	for(var row = 0; row < grid.length; row++){
+		for(var column = 0; column < grid[row].length; column++){
+			if(grid[row][column] == value){
+				var block = [row, column];
+				return block;
+			}
+		}
+	}
 }
