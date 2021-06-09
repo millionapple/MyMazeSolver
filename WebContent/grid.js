@@ -45,6 +45,7 @@ function showButtons(){
 	document.getElementById("setPath").style.display = "inline-block";
 	document.getElementById("solveMaze").style.display = "inline-block";
 	document.getElementById("resetGrid").style.display = "inline-block";
+	document.getElementById("reloadGrid").style.display = "inline-block";
 	document.getElementById("gridSetup").style.display = "none";
 }
 
