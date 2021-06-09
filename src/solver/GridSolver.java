@@ -53,13 +53,13 @@ public class GridSolver {
 	}
 	public boolean isPath(int row, int column, int[][] grid) {
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] == 1 ? numOfWalls+1 : +0;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] == 1 ? numOfWalls+1 : +0;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] == 1 ? numOfWalls+1 : +0;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : +0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : numOfWalls+0;
 		return numOfWalls == 4 ? false : true;
 	}
-
+	
 	public int[][] move(int[][] grid, int[] currentRowAndCol){
 		System.out.println(Arrays.deepToString(grid).replace("], ", "]\n").replace("[[", "\n[").replace("]]", "]"));
 		int row = currentRowAndCol[0];
@@ -68,26 +68,61 @@ public class GridSolver {
 			grid[row][column] = 4;
 		}
 		if(row-1 >= 0 && grid[row-1][column] == 0) {
-			currentRowAndCol[0] = row - 1;
-			currentRowAndCol[1] = column;
-			grid[row-1][column] = 5;
-			move(grid, currentRowAndCol);
+			int[] path = new int[]{row-1, column};
+			if(pathContinues(grid, path)) {
+				currentRowAndCol[0] = path[0];
+				currentRowAndCol[1] = path[1];
+				grid[row-1][column] = 5;
+				move(grid, currentRowAndCol);
+			}else {
+				grid[row-1][column] = 6;
+				move(grid, currentRowAndCol);
+			}
 		}else if(column+1 < grid[row].length && grid[row][column+1] == 0) {
-			currentRowAndCol[0] = row;
-			currentRowAndCol[1] = column+1;
-			grid[row][column+1] = 5;
-			move(grid, currentRowAndCol);
+			int[] path = new int[]{row, column+1};
+			if(pathContinues(grid, path)) {
+				currentRowAndCol[0] = path[0];
+				currentRowAndCol[1] = path[1];
+				grid[row][column+1] = 5;
+				move(grid, currentRowAndCol);
+			}else {
+				grid[row][column+1] = 6;
+				move(grid, currentRowAndCol);
+			}
 		}else if(row+1 < grid.length && grid[row+1][column] == 0) {
-			currentRowAndCol[0] = row+1;
-			currentRowAndCol[1] = column;
-			grid[row+1][column] = 5;
-			move(grid, currentRowAndCol);
+			int[] path = new int[]{row+1, column};
+			if(pathContinues(grid, path)) {
+				currentRowAndCol[0] = path[0];
+				currentRowAndCol[1] = path[1];
+				grid[row+1][column] = 5;
+				move(grid, currentRowAndCol);
+			}else {
+				grid[row+1][column] = 6;
+				move(grid, currentRowAndCol);
+			}
 		}else if(column-1 >= 0 && grid[row][column-1] == 0) {
-			currentRowAndCol[0] = row;
-			currentRowAndCol[1] = column-1;
-			grid[row][column-1] = 5;
-			move(grid, currentRowAndCol);
+			int[] path = new int[]{row, column-1};
+			if(pathContinues(grid, path)) {
+				currentRowAndCol[0] = path[0];
+				currentRowAndCol[1] = path[1];
+				grid[row][column-1] = 5;
+				move(grid, currentRowAndCol);
+			}else {
+				grid[row][column-1] = 6;
+				move(grid, currentRowAndCol);
+			}
 		}
 		return grid;
+	}
+
+	public boolean pathContinues(int[][] grid, int[] path){
+		int row = path[0];
+		int column = path[1];
+		int numOfWalls = 0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : numOfWalls+0;
+		return numOfWalls == 3 ? false : true;
 	}
 }
