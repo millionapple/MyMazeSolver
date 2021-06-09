@@ -44,6 +44,7 @@ function showButtons(){
 	document.getElementById("setEnd").style.display = "inline-block";
 	document.getElementById("setPath").style.display = "inline-block";
 	document.getElementById("solveMaze").style.display = "inline-block";
+	document.getElementById("resetGrid").style.display = "inline-block";
 	document.getElementById("gridSetup").style.display = "none";
 }
 
@@ -136,6 +137,15 @@ function addEndToGrid(target){
 		row = target.parentElement.id.replace("row","");
 		grid[row][column] = 3;
 		target.style.backgroundColor = "red"
+	}
+}
+function resetGrid(){
+	for(var row = 0; row < grid.length; row++){
+		for(var column = 0; column < grid[row].length; column++){
+			var block = document.getElementById("row"+row).childNodes[column];
+			block.style.backgroundColor = "white";
+			grid[row][column] = 0;
+		}
 	}
 }
 function checkGrid(value){
