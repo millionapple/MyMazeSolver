@@ -91,7 +91,10 @@ public class GridSolver {
 				System.out.println(Arrays.toString(branch));
 			}
 		}
-		if(row-1 >= 0 && grid[row-1][column] == 0) {
+		if(foundEnd(grid, currentRowAndCol)) {
+			System.out.println("End has been found");
+			return grid;
+		}else if(row-1 >= 0 && grid[row-1][column] == 0) {
 			int[] path = new int[]{row-1, column};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
@@ -150,7 +153,17 @@ public class GridSolver {
 		return numOfWalls == 3 ? false : true;
 	}
 	
-	
+	public boolean foundEnd(int[][] grid, int[] currentRowAndCol) {
+		int row = currentRowAndCol[0];
+		int column = currentRowAndCol[1];
+		int end = 0;
+		end = row-1 >= 0 && grid[row-1][column] == 3 ? end+1 : end;
+		end = column-1 >= 0 && grid[row][column-1] == 3 ? end+1 : end;
+		end = row+1 < grid.length && grid[row+1][column] == 3 ? end+1 : end;
+		end = column+1 < grid[row].length && grid[row][column+1] == 3 ? end+1 : end;
+		System.out.println(end>1);
+		return end > 0;
+	}
 	public boolean pathBranches(int[][] grid, int[]currentRowAndCol) {
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
