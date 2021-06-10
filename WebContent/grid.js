@@ -117,7 +117,7 @@ function addWallToGrid(target){
 	column = target.id.replace("column", "");
 	row = target.parentElement.id.replace("row","");
 	grid[row][column] = 1;
-	target.style.backgroundColor = "black";
+	target.style.backgroundColor = "#999999";
 	console.log(grid);
 }
 function addStartToGrid(target){
@@ -127,7 +127,7 @@ function addStartToGrid(target){
 		column = target.id.replace("column", "");
 		row = target.parentElement.id.replace("row","");
 		grid[row][column] = 2;
-		target.style.backgroundColor = "green";
+		target.style.backgroundColor = "#CCFF99";
 	}
 }
 function addEndToGrid(target){
@@ -137,7 +137,7 @@ function addEndToGrid(target){
 		column = target.id.replace("column", "");
 		row = target.parentElement.id.replace("row","");
 		grid[row][column] = 3;
-		target.style.backgroundColor = "red"
+		target.style.backgroundColor = "#FF6633"
 	}
 }
 function resetGrid(){
@@ -183,10 +183,11 @@ function fillPath(grid){
 			if(grid[row][column] == 4){
 				var rowElement = document.getElementById("row"+row);
 				var columnElement = rowElement.childNodes[column];
-				columnElement.style.backgroundColor = "blue";
+				columnElement.style.backgroundColor = "#6633FF";
 			}
 		}
 	}
+	markDeadends(grid);
 	setTimeout(function(){mazeComplete(grid)}, 1000);
 }
 function mazeComplete(grid){
@@ -211,6 +212,16 @@ function getBlockBySpecificValue(value){
 			if(grid[row][column] == value){
 				var block = [row, column];
 				return block;
+			}
+		}
+	}
+}function markDeadends(grid){
+	for(var row = 0; row < grid.length; row++){
+		for(var column = 0; column < grid[row].length; column++){
+			if(grid[row][column] == 6){
+				var rowElement = document.getElementById("row"+row);
+				var columnElement = rowElement.childNodes[column];
+				columnElement.style.backgroundColor = "#FFFF66";
 			}
 		}
 	}
