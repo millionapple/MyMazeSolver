@@ -62,12 +62,12 @@ public class GridSolver {
 	}
 	
 	ArrayList<int[]> branches = new ArrayList<>();
-	int backToBranchCount = 0;
+	int deadBranches = 0;
 	int numOfBranches = 0;
 	
 	public int[][] move(int[][] grid, int[] currentRowAndCol){
 		System.out.println(Arrays.deepToString(grid).replace("], ", "]\n").replace("[[", "\n[").replace("]]", "]"));
-		System.out.println("Branching Paths");
+		System.out.println("Branching Paths: ");
 		for(int[] branch : branches) {
 			System.out.println(Arrays.toString(branch));
 		}
@@ -76,7 +76,10 @@ public class GridSolver {
 		if(grid[row][column] == 5) {
 			grid[row][column] = 4;
 		}
-		if(pathBranches(grid, currentRowAndCol)) {
+		if(foundEnd(grid, currentRowAndCol)) {
+			System.out.println("End has been found");
+			return grid;
+		}else if(pathBranches(grid, currentRowAndCol)) {
 			if(branches.isEmpty()) {
 				System.out.println("Is empty and creating a branch");
 				addBranches(currentRowAndCol);
@@ -90,11 +93,14 @@ public class GridSolver {
 			for(int[] branch : branches) {
 				System.out.println(Arrays.toString(branch));
 			}
+		}else if(walledOff(grid, currentRowAndCol)) {
+			System.out.println("Branch is fully mapped out and cannot be navigated. Back to Previous branch.");
+			deadBranches+=1;
+			numOfBranches = numOfBranches - deadBranches;
+			branches.remove(numOfBranches);
+			move(grid, resetToPreviousBranch(branches));
 		}
-		if(foundEnd(grid, currentRowAndCol)) {
-			System.out.println("End has been found");
-			return grid;
-		}else if(row-1 >= 0 && grid[row-1][column] == 0) {
+		if(row-1 >= 0 && grid[row-1][column] == 0) {
 			int[] path = new int[]{row-1, column};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
@@ -152,6 +158,17 @@ public class GridSolver {
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : numOfWalls+0;
 		return numOfWalls == 3 ? false : true;
 	}
+	public boolean walledOff(int[][] grid, int[] currentRowAndCol) {
+		System.out.println("doing walled off function");
+		int row = currentRowAndCol[0];
+		int column = currentRowAndCol[1];
+		int numOfWalls = 0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] != 0 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] != 0 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] != 0 ? numOfWalls+1 : numOfWalls+0;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != 0 ?numOfWalls+1 : numOfWalls+0;
+		return numOfWalls == 3 ? false : true;
+	}
 	
 	public boolean foundEnd(int[][] grid, int[] currentRowAndCol) {
 		int row = currentRowAndCol[0];
@@ -187,8 +204,6 @@ public class GridSolver {
 	public int[] resetToPreviousBranch(ArrayList<int[]>branches) {
 		System.out.println("To Previous Branch: "+Arrays.toString(branches.get(numOfBranches-1)));
 		int currentBranch = numOfBranches-1;
-		backToBranchCount += 1;
-		System.out.println("backToBranchCount: "+backToBranchCount);
 		int[] previousBranch = new int[2];
 		previousBranch[0] = branches.get(currentBranch)[0];
 		previousBranch[1] = branches.get(currentBranch)[1];
