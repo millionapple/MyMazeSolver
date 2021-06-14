@@ -14,18 +14,17 @@ import solver.GridSolver;
 
 @WebServlet("/SolveMazeServlet")
 public class SolveMazeServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     public SolveMazeServlet() {
         super();
     }
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ObjectMapper objectMapper = new ObjectMapper();
-		GridSolver solver = new GridSolver();
-		int[][] grid = objectMapper.readValue(request.getParameter("grid"), int[][].class);
-		int[][] solvedGrid = solver.solveGrid(grid);
-		response.getWriter().write(objectMapper.writeValueAsString(solvedGrid));
-	}
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        GridSolver solver = new GridSolver();
+        int[][] grid = objectMapper.readValue(request.getParameter("grid"), int[][].class);
+        int[][] solvedGrid = solver.solveGrid(grid);
+        response.getWriter().write(objectMapper.writeValueAsString(solvedGrid));
+    }
 }
