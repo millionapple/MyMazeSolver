@@ -48,13 +48,11 @@ public class GridSolver {
 	}
 	
 	public boolean checkStartOrEndWalledOff(int[][] grid) {
-		boolean startPath = true;
-		boolean endPath = true;
 		int[] startRowAndCol = findStartOrEnd(grid, START);
 		int[] endRowAndCol = findStartOrEnd(grid, END);
-		startPath = isPath(startRowAndCol[0], startRowAndCol[1], grid);
-		endPath = isPath(endRowAndCol[0], endRowAndCol[1], grid);
-		return startPath == false || endPath == false ? false : true;
+		boolean startPath = isPath(startRowAndCol[0], startRowAndCol[1], grid);
+		boolean endPath = isPath(endRowAndCol[0], endRowAndCol[1], grid);
+		return startPath == true && endPath == true;
 	}
 	public boolean isPath(int row, int column, int[][] grid) {
 		int numOfWalls = 0;
