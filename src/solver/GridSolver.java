@@ -24,13 +24,10 @@ public class GridSolver {
 		}
 
 	public boolean gridHasStartAndEnd(int[][] grid) {
-		boolean hasStart = false;
-		boolean hasEnd = false;
 		int[] startRowAndCol = findStartOrEnd(grid, START);
 		int[] endRowAndCol = findStartOrEnd(grid, END);
-		hasStart = startRowAndCol[0] == NOT_VALID || startRowAndCol[1] == NOT_VALID ? false : true;
-		hasEnd = endRowAndCol[0] == NOT_VALID || endRowAndCol[1] == NOT_VALID ? false : true;
-		
+		boolean hasStart = startRowAndCol[0] != NOT_VALID && startRowAndCol[1] != NOT_VALID;
+		boolean hasEnd = endRowAndCol[0] != NOT_VALID && endRowAndCol[1] != NOT_VALID;
 		return hasStart == true && hasEnd == true;
 	}
 	public int[] findStartOrEnd(int[][] grid, int value) {
