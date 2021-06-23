@@ -21,8 +21,7 @@ public class GridSolverTest {
 		boolean result = gridSolver.gridHasStartAndEnd(grid);
 		
 		assertEquals(expected, result);
-	}
-	
+	}	
 	@Test
 	public void hasStartButNoEnd() {
 		GridSolver gridSolver = new GridSolver();
@@ -39,7 +38,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
 	@Test
 	public void hasEndButNoStart() {
 		GridSolver gridSolver = new GridSolver();
@@ -56,7 +54,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
 	@Test 
 	public void hasBothStartAndEnd() {
 		GridSolver gridSolver = new GridSolver();
@@ -117,7 +114,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
 	@Test 
 	public void endSurroundedByWalls() {
 		GridSolver gridSolver = new GridSolver();
@@ -134,7 +130,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
 	@Test
 	public void startInCornerSurroundedByWalls() {
 		GridSolver gridSolver = new GridSolver();
@@ -149,7 +144,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-
 	@Test
 	public void notSurroundedByWalls() {
 		GridSolver gridSolver = new GridSolver();
@@ -162,7 +156,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-
 	@Test
 	public void endNotSurroundedStartIs() {
 		GridSolver gridSolver = new GridSolver();
@@ -177,7 +170,6 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
 	@Test
 	public void startNotSurroundedEndIs() {
 		GridSolver gridSolver = new GridSolver();
@@ -193,6 +185,39 @@ public class GridSolverTest {
 		assertEquals(expected, result);
 	}
 
+	@Test
+	public void testIsPathWalledOff() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		boolean expected = false;
+		
+		boolean result = gridSolver.isPath(1, 1, grid);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testIsPathClear() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 0;
+			}
+		}
+		grid[1][1] = 2;
+		boolean expected = true;
+		
+		boolean result = gridSolver.isPath(1, 1, grid);
+		
+		assertEquals(expected, result);
+	}
+	
 	@Test
 	public void testingMoveCanMove() {
 		GridSolver gridSolver = new GridSolver();
@@ -221,7 +246,6 @@ public class GridSolverTest {
 		
 		assertArrayEquals(expected, result);
 	}
-
 	@Test
 	public void unsolvableMaze() {
 		GridSolver gridSolver = new GridSolver();
@@ -251,7 +275,6 @@ public class GridSolverTest {
 		
 		assertArrayEquals(expected, result);
 	}
-
 	@Test 
 	public void differentMaze() {
 		GridSolver gridSolver = new GridSolver();
