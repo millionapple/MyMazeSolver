@@ -4,13 +4,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GridSolver {
-	public int[][] solveGrid(int[][] grid){
+	final int NOT_VALID = -1;
+	final int PATH = 0;
+	final int WALL = 1;
+	final int START = 2;
+	final int END = 3;
+	final int WALKED_PATH = 4;
+	final int HEAD = 5;
+	final int DEAD_END = 6;
+	
+ 	public int[][] solveGrid(int[][] grid){
 			boolean hasStartAndEnd = gridHasStartAndEnd(grid);
 			boolean startOrEndNotWalledOff = checkStartOrEndWalledOff(grid);
 			if(hasStartAndEnd && startOrEndNotWalledOff) {
-				//the idea that I have come up with is go through the array and wherever a 0 is replace that with a 
-				// 5 to represent the head of the path then replace that with a 4 when it moves on. starting at start.
-				int[] startRowAndCol = findStartOrEnd(grid, 2);
+				int[] startRowAndCol = findStartOrEnd(grid, START);
 				grid = move(grid, startRowAndCol);
 			}
 			return grid;
@@ -19,10 +26,10 @@ public class GridSolver {
 	public boolean gridHasStartAndEnd(int[][] grid) {
 		boolean hasStart = false;
 		boolean hasEnd = false;
-		int[] startRowAndCol = findStartOrEnd(grid, 2);
-		int[] endRowAndCol = findStartOrEnd(grid, 3);
-		hasStart = startRowAndCol[0] == -1 || startRowAndCol[1] == -1 ? false : true;
-		hasEnd = endRowAndCol[0] == -1 || endRowAndCol[1] == -1 ? false : true;
+		int[] startRowAndCol = findStartOrEnd(grid, START);
+		int[] endRowAndCol = findStartOrEnd(grid, END);
+		hasStart = startRowAndCol[0] == NOT_VALID || startRowAndCol[1] == NOT_VALID ? false : true;
+		hasEnd = endRowAndCol[0] == NOT_VALID || endRowAndCol[1] == NOT_VALID ? false : true;
 		
 		return hasStart == true && hasEnd == true;
 	}
@@ -35,8 +42,8 @@ public class GridSolver {
 					rowAndColumn[1] = column;
 					return rowAndColumn;
 				}else {
-					rowAndColumn[0] = -1;
-					rowAndColumn[1] = -1;
+					rowAndColumn[0] = NOT_VALID;
+					rowAndColumn[1] = NOT_VALID;
 				}
 			}
 		}
@@ -46,18 +53,18 @@ public class GridSolver {
 	public boolean checkStartOrEndWalledOff(int[][] grid) {
 		boolean startPath = true;
 		boolean endPath = true;
-		int[] startRowAndCol = findStartOrEnd(grid, 2);
-		int[] endRowAndCol = findStartOrEnd(grid, 3);
+		int[] startRowAndCol = findStartOrEnd(grid, START);
+		int[] endRowAndCol = findStartOrEnd(grid, END);
 		startPath = isPath(startRowAndCol[0], startRowAndCol[1], grid);
 		endPath = isPath(endRowAndCol[0], endRowAndCol[1], grid);
 		return startPath == false || endPath == false ? false : true;
 	}
 	public boolean isPath(int row, int column, int[][] grid) {
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == WALL ?numOfWalls+1 : numOfWalls;
 		return numOfWalls == 4 ? false : true;
 	}
 	
@@ -73,8 +80,8 @@ public class GridSolver {
 		}
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
-		if(grid[row][column] == 5) {
-			grid[row][column] = 4;
+		if(grid[row][column] == HEAD) {
+			grid[row][column] = WALKED_PATH;
 		}
 		if(foundEnd(grid, currentRowAndCol)) {
 			System.out.println("End has been found");
@@ -100,48 +107,48 @@ public class GridSolver {
 			branches.remove(numOfBranches);
 			move(grid, resetToPreviousBranch(branches));
 		}
-		if(row-1 >= 0 && grid[row-1][column] == 0) {
+		if(row-1 >= 0 && grid[row-1][column] == PATH) {
 			int[] path = new int[]{row-1, column};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
 				currentRowAndCol[1] = path[1];
-				grid[row-1][column] = 5;
+				grid[row-1][column] = HEAD;
 				move(grid, currentRowAndCol);
 			}else {
-				grid[row-1][column] = 6;
+				grid[row-1][column] = DEAD_END;
 				move(grid, resetToPreviousBranch(branches));
 			}
-		}else if(column+1 < grid[row].length && grid[row][column+1] == 0) {
+		}else if(column+1 < grid[row].length && grid[row][column+1] == PATH) {
 			int[] path = new int[]{row, column+1};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
 				currentRowAndCol[1] = path[1];
-				grid[row][column+1] = 5;
+				grid[row][column+1] = HEAD;
 				move(grid, currentRowAndCol);
 			}else {
-				grid[row][column+1] = 6;
+				grid[row][column+1] = DEAD_END;
 				move(grid, resetToPreviousBranch(branches));
 			}
-		}else if(row+1 < grid.length && grid[row+1][column] == 0) {
+		}else if(row+1 < grid.length && grid[row+1][column] == PATH) {
 			int[] path = new int[]{row+1, column};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
 				currentRowAndCol[1] = path[1];
-				grid[row+1][column] = 5;
+				grid[row+1][column] = HEAD;
 				move(grid, currentRowAndCol);
 			}else {
-				grid[row+1][column] = 6;
+				grid[row+1][column] = DEAD_END;
 				move(grid, resetToPreviousBranch(branches));
 			}
-		}else if(column-1 >= 0 && grid[row][column-1] == 0) {
+		}else if(column-1 >= 0 && grid[row][column-1] == PATH) {
 			int[] path = new int[]{row, column-1};
 			if(pathContinues(grid, path)) {
 				currentRowAndCol[0] = path[0];
 				currentRowAndCol[1] = path[1];
-				grid[row][column-1] = 5;
+				grid[row][column-1] = HEAD;
 				move(grid, currentRowAndCol);
 			}else {
-				grid[row][column-1] = 6;
+				grid[row][column-1] = DEAD_END;
 				move(grid, resetToPreviousBranch(branches));
 			}
 		}
@@ -152,10 +159,10 @@ public class GridSolver {
 		int row = path[0];
 		int column = path[1];
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] == 1 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == 1 ?numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] == WALL ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == WALL ?numOfWalls+1 : numOfWalls;
 		return numOfWalls == 3 ? false : true;
 	}
 	public boolean walledOff(int[][] grid, int[] currentRowAndCol) {
@@ -163,10 +170,10 @@ public class GridSolver {
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] != 0 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] != 0 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] != 0 ? numOfWalls+1 : numOfWalls+0;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != 0 ?numOfWalls+1 : numOfWalls+0;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH ? numOfWalls+1 : numOfWalls;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH ?numOfWalls+1 : numOfWalls;
 		return numOfWalls == 3 ? false : true;
 	}
 	
@@ -174,21 +181,21 @@ public class GridSolver {
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
 		int end = 0;
-		end = row-1 >= 0 && grid[row-1][column] == 3 ? end+1 : end;
-		end = column-1 >= 0 && grid[row][column-1] == 3 ? end+1 : end;
-		end = row+1 < grid.length && grid[row+1][column] == 3 ? end+1 : end;
-		end = column+1 < grid[row].length && grid[row][column+1] == 3 ? end+1 : end;
-		System.out.println(end>1);
+		end = row-1 >= 0 && grid[row-1][column] == END ? end+1 : end;
+		end = column-1 >= 0 && grid[row][column-1] == END ? end+1 : end;
+		end = row+1 < grid.length && grid[row+1][column] == END ? end+1 : end;
+		end = column+1 < grid[row].length && grid[row][column+1] == END ? end+1 : end;
+		System.out.println(end>0);
 		return end > 0;
 	}
 	public boolean pathBranches(int[][] grid, int[]currentRowAndCol) {
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
 		int paths = 0;
-		paths = row-1 >= 0 && grid[row-1][column] == 0 ? paths+1 : paths;
-		paths = column-1 >= 0 && grid[row][column-1] == 0 ? paths+1 : paths;
-		paths = row+1 < grid.length && grid[row+1][column] == 0 ? paths+1 : paths;
-		paths = column+1 < grid[row].length && grid[row][column+1] == 0 ? paths+1 : paths;
+		paths = row-1 >= 0 && grid[row-1][column] == PATH ? paths+1 : paths;
+		paths = column-1 >= 0 && grid[row][column-1] == PATH ? paths+1 : paths;
+		paths = row+1 < grid.length && grid[row+1][column] == PATH ? paths+1 : paths;
+		paths = column+1 < grid[row].length && grid[row][column+1] == PATH ? paths+1 : paths;
 		System.out.println(paths>1);
 		return paths > 1;
 	}
