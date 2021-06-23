@@ -158,7 +158,8 @@ public class GridSolver {
 		numOfWalls = column - 1 < 0 || grid[row][column-1] == WALL ? numOfWalls+1 : numOfWalls;
 		numOfWalls = row +1 >= grid.length || grid[row+1][column] == WALL ? numOfWalls+1 : numOfWalls;
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == WALL ?numOfWalls+1 : numOfWalls;
-		return numOfWalls == 3 ? false : true;
+		System.out.println("Path Continues: "+ (numOfWalls!=3));
+		return numOfWalls < 3;
 	}
 	public boolean walledOff(int[][] grid, int[] currentRowAndCol) {
 		System.out.println("doing walled off function");

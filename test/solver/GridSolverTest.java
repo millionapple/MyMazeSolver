@@ -314,5 +314,43 @@ public class GridSolverTest {
 		
 		assertArrayEquals(expected, result);
 	}
+	
+	
+	@Test
+	public void testNextToWallNoPath() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		int [] path = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.pathContinues(grid, path);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testPathDoesContinue() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		grid[1][2] = 0;
+		grid[2][2] = 0;
+		int[] path = new int[] {1, 2};
+		boolean expected = true;
+		
+		boolean result = gridSolver.pathContinues(grid, path);
+		
+		assertEquals(expected, result);
+	}
 }
 
