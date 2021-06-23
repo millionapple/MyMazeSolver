@@ -71,6 +71,37 @@ public class GridSolverTest {
 	}
 
 	@Test
+	public void testFindStart() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		grid[0][1] = 1;
+		grid[1][0] = 1;
+		grid[2][1] = 1;
+		grid[1][2] = 1;
+		grid[1][1] = 2;
+		int[] expected = new int[] {1,1};
+		
+		int[] result = gridSolver.findStartOrEnd(grid, 2);
+		
+		assertArrayEquals(expected, result);
+	}
+	@Test
+	public void testFindEnd() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		grid[0][1] = 1;
+		grid[1][0] = 1;
+		grid[2][1] = 1;
+		grid[1][2] = 1;
+		grid[1][1] = 3;
+		int[] expected = new int[] {1,1};
+		
+		int[] result = gridSolver.findStartOrEnd(grid, 3);
+		
+		assertArrayEquals(expected, result);
+	}
+	
+	@Test
 	public void startSurroundedByWalls() {
 		GridSolver gridSolver = new GridSolver();
 		int[][] grid = new int[4][4];
