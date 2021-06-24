@@ -404,6 +404,59 @@ public class GridSolverTest {
 		assertEquals(expected, result);
 	}
 
-	
+	@Test
+	public void testFoundEndIsNextToEnd() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 0;
+			}
+		}
+		grid[1][1] = 4;
+		grid[1][0] = 3;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = true;
+		
+		boolean result = gridSolver.foundEnd(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testFoundEndIsDiagonalToEnd() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 0;
+			}
+		}
+		grid[1][1] = 4;
+		grid[2][2] = 3;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.foundEnd(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testFoundEndNotNearEnd() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 0;
+			}
+		}
+		grid[1][1] = 4;
+		grid[3][3] = 3;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.foundEnd(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
 }
 
