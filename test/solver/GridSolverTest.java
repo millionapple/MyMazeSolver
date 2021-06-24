@@ -3,6 +3,8 @@ package solver;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 public class GridSolverTest {
@@ -512,6 +514,32 @@ public class GridSolverTest {
 		boolean result = gridSolver.pathBranches(grid, currentRowAndCol);
 		
 		assertEquals(expected, result);
+	}
+
+	@Test
+	public void testCreateBranch() {
+		GridSolver gridSolver = new GridSolver();
+		int [] currentRowAndCol = new int[] {1,1};
+		ArrayList<int[]> expected = new ArrayList<>();
+		expected.add(currentRowAndCol);
+		
+		gridSolver.addBranches(currentRowAndCol);;
+		
+		assertArrayEquals(expected.get(0), gridSolver.branches.get(0));
+	}
+	@Test
+	public void testCreateMultipleBranches() {
+		GridSolver gridSolver = new GridSolver();
+		int [] currentRowAndCol = new int[] {1,1};
+		int [] add1 = new int[] {0,1};
+		ArrayList<int[]> expected = new ArrayList<>();
+		expected.add(currentRowAndCol);
+		expected.add(add1);
+		
+		gridSolver.addBranches(currentRowAndCol);
+		gridSolver.addBranches(add1);
+		
+		assertArrayEquals(expected.get(0), gridSolver.branches.get(0));
 	}
 }
 
