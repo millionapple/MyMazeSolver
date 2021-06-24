@@ -315,7 +315,6 @@ public class GridSolverTest {
 		assertArrayEquals(expected, result);
 	}
 	
-	
 	@Test
 	public void testNextToWallNoPath() {
 		GridSolver gridSolver = new GridSolver();
@@ -352,5 +351,59 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
+
+	@Test
+	public void testWalledOff() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = true;
+		
+		boolean result = gridSolver.walledOff(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testWalledOffBySide() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[0][0] = 2;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = true;
+		
+		boolean result = gridSolver.walledOff(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testNotWalledOff() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 0;
+			}
+		}
+		grid[1][1] = 2;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.walledOff(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+
+	
 }
 

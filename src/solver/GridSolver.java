@@ -167,10 +167,14 @@ public class GridSolver {
 		int column = currentRowAndCol[1];
 		int numOfWalls = 0;
 		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH ? numOfWalls+1 : numOfWalls;
+		System.out.println("1. Number Of Walls: "+numOfWalls);
 		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH ? numOfWalls+1 : numOfWalls;
+		System.out.println("1. Number Of Walls: "+numOfWalls);
 		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH ? numOfWalls+1 : numOfWalls;
+		System.out.println("1. Number Of Walls: "+numOfWalls);
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH ?numOfWalls+1 : numOfWalls;
-		return numOfWalls == 3 ? false : true;
+		System.out.println("1. Number Of Walls: "+numOfWalls);
+		return numOfWalls > 3;
 	}
 	
 	public boolean foundEnd(int[][] grid, int[] currentRowAndCol) {
