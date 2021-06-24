@@ -410,7 +410,7 @@ public class GridSolverTest {
 		int[][] grid = new int[4][4];
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
-				grid[row][column] = 0;
+				grid[row][column] = 1;
 			}
 		}
 		grid[1][1] = 4;
@@ -428,7 +428,7 @@ public class GridSolverTest {
 		int[][] grid = new int[4][4];
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
-				grid[row][column] = 0;
+				grid[row][column] = 1;
 			}
 		}
 		grid[1][1] = 4;
@@ -446,7 +446,7 @@ public class GridSolverTest {
 		int[][] grid = new int[4][4];
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
-				grid[row][column] = 0;
+				grid[row][column] = 1;
 			}
 		}
 		grid[1][1] = 4;
@@ -455,6 +455,61 @@ public class GridSolverTest {
 		boolean expected = false;
 		
 		boolean result = gridSolver.foundEnd(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+
+	@Test
+	public void testPathBranches() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		grid[0][1] = 0;
+		grid[1][0] = 0;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = true;
+		
+		boolean result = gridSolver.pathBranches(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testIsPathButDoesNotBranch() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		grid[0][1] = 0;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.pathBranches(grid, currentRowAndCol);
+		
+		assertEquals(expected, result);
+	}
+	@Test
+	public void testNoBranch() {
+		GridSolver gridSolver = new GridSolver();
+		int[][] grid = new int[4][4];
+		for(int row = 0; row < grid.length; row++) {
+			for(int column = 0; column < grid[row].length; column++) {
+				grid[row][column] = 1;
+			}
+		}
+		grid[1][1] = 2;
+		int [] currentRowAndCol = new int[] {1,1};
+		boolean expected = false;
+		
+		boolean result = gridSolver.pathBranches(grid, currentRowAndCol);
 		
 		assertEquals(expected, result);
 	}
