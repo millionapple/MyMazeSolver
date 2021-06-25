@@ -541,5 +541,54 @@ public class GridSolverTest {
 		
 		assertArrayEquals(expected.get(0), gridSolver.branches.get(0));
 	}
+
+	@Test
+	public void testResetToPreviousBranch() {
+		GridSolver gridSolver = new GridSolver();
+		int [] add1 = new int[] {1,1};
+		gridSolver.addBranches(add1);
+		int[] expected = new int[] {1,1};
+		
+		int[] result = gridSolver.resetToPreviousBranch(gridSolver.branches);
+		
+		assertArrayEquals(expected, result);
+	}
+	@Test
+	public void testResetToPreviousOfPrevious() {
+		GridSolver gridSolver = new GridSolver();
+		int [] add1 = new int[] {1,1};
+		int [] add2 = new int[] {0,1};
+		int [] add3 = new int[] {0,0};
+		gridSolver.addBranches(add1);
+		gridSolver.addBranches(add2);
+		gridSolver.addBranches(add3);
+		gridSolver.deadBranches = 2;
+		gridSolver.numOfBranches = gridSolver.numOfBranches - gridSolver.deadBranches;
+		int[] expected = new int[] {1,1};
+		
+		int[] result = gridSolver.resetToPreviousBranch(gridSolver.branches);
+		
+		assertArrayEquals(expected, result);
+	}
+	@Test
+	public void testToPreviousNewBranchToPrevious() {
+		GridSolver gridSolver = new GridSolver();
+		int [] add1 = new int[] {1,1};
+		int [] add2 = new int[] {0,1};
+		int [] add3 = new int[] {0,0};
+		gridSolver.addBranches(add1);
+		gridSolver.addBranches(add2);
+		gridSolver.deadBranches = 1;
+		gridSolver.numOfBranches = gridSolver.numOfBranches - gridSolver.deadBranches;
+		gridSolver.branches.remove(gridSolver.numOfBranches);
+		int[] expected = new int[] {0,0};
+		
+		int[] result = gridSolver.resetToPreviousBranch(gridSolver.branches);
+		gridSolver.addBranches(add3);
+		result = gridSolver.resetToPreviousBranch(gridSolver.branches);
+		
+		assertArrayEquals(expected, result);
+	}
+
 }
 
