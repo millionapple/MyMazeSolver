@@ -205,11 +205,16 @@ public class GridSolver {
 	}
 	
 	public int[] resetToPreviousBranch(ArrayList<int[]>branches) {
-		System.out.println("To Previous Branch: "+Arrays.toString(branches.get(numOfBranches-1)));
 		int currentBranch = numOfBranches-1;
 		int[] previousBranch = new int[2];
+		try {
+		System.out.println("To Previous Branch: "+Arrays.toString(branches.get(numOfBranches-1)));
 		previousBranch[0] = branches.get(currentBranch)[0];
 		previousBranch[1] = branches.get(currentBranch)[1];
+		return previousBranch;
+		}catch(ArrayIndexOutOfBoundsException exception) {
+			System.out.println("The Maze cannot be solved it has tried all paths: "+exception);
+		}
 		return previousBranch;
 	}
 }

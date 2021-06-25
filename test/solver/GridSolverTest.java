@@ -219,7 +219,7 @@ public class GridSolverTest {
 		
 		assertEquals(expected, result);
 	}
-	
+
 	@Test
 	public void testingMoveCanMove() {
 		GridSolver gridSolver = new GridSolver();
@@ -248,7 +248,7 @@ public class GridSolverTest {
 		
 		assertArrayEquals(expected, result);
 	}
-	@Test
+	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	public void unsolvableMaze() {
 		GridSolver gridSolver = new GridSolver();
 		int[][] grid = new int[4][4];
@@ -273,9 +273,7 @@ public class GridSolverTest {
 		expected[1][3] = 0;
 		
 		System.out.println("Unsolvable Maze");
-		int[][] result = gridSolver.move(grid, start);
-		
-		assertArrayEquals(expected, result);
+		gridSolver.move(grid, start);
 	}
 	@Test 
 	public void differentMaze() {
