@@ -191,6 +191,7 @@ public class GridSolverTest {
 	public void testIsPathWalledOff() {
 		GridSolver gridSolver = new GridSolver();
 		int[][] grid = new int[4][4];
+		int[] rowAndCol = new int[] {1,1};
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
 				grid[row][column] = 1;
@@ -199,13 +200,14 @@ public class GridSolverTest {
 		grid[1][1] = 2;
 		boolean expected = false;
 		
-		boolean result = gridSolver.isPath(1, 1, grid);
+		boolean result = gridSolver.isPath(rowAndCol, grid);
 		
 		assertEquals(expected, result);
 	}
 	@Test
 	public void testIsPathClear() {
 		GridSolver gridSolver = new GridSolver();
+		int[] rowAndCol = new int[] {1,1};
 		int[][] grid = new int[4][4];
 		for(int row = 0; row < grid.length; row++) {
 			for(int column = 0; column < grid[row].length; column++) {
@@ -215,7 +217,7 @@ public class GridSolverTest {
 		grid[1][1] = 2;
 		boolean expected = true;
 		
-		boolean result = gridSolver.isPath(1, 1, grid);
+		boolean result = gridSolver.isPath(rowAndCol, grid);
 		
 		assertEquals(expected, result);
 	}

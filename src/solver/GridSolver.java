@@ -50,17 +50,19 @@ public class GridSolver {
 	public boolean checkStartOrEndWalledOff(int[][] grid) {
 		int[] startRowAndCol = findStartOrEnd(grid, START);
 		int[] endRowAndCol = findStartOrEnd(grid, END);
-		boolean startPath = isPath(startRowAndCol[0], startRowAndCol[1], grid);
-		boolean endPath = isPath(endRowAndCol[0], endRowAndCol[1], grid);
+		boolean startPath = isPath(startRowAndCol, grid);
+		boolean endPath = isPath(endRowAndCol, grid);
 		return startPath == true && endPath == true;
 	}
-	public boolean isPath(int row, int column, int[][] grid) {
+	public boolean isPath(int[] rowAndCol, int[][] grid) {
+		int row = rowAndCol[0];
+		int column = rowAndCol[1];
 		int numOfWalls = 0;
 		numOfWalls = row - 1 < 0 || grid[row-1][column] == WALL ? numOfWalls+1 : numOfWalls;
 		numOfWalls = column - 1 < 0 || grid[row][column-1] == WALL ? numOfWalls+1 : numOfWalls;
 		numOfWalls = row +1 >= grid.length || grid[row+1][column] == WALL ? numOfWalls+1 : numOfWalls;
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == WALL ?numOfWalls+1 : numOfWalls;
-		return numOfWalls == 4 ? false : true;
+		return numOfWalls < 4;
 	}
 	
 	ArrayList<int[]> branches = new ArrayList<>();
