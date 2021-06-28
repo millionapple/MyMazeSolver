@@ -156,22 +156,22 @@ public class GridSolver {
 		int row = path[0];
 		int column = path[1];
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] == WALL ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] == WALL ? numOfWalls+1 : numOfWalls;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] == WALL ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] == WALL ?numOfWalls+1 : numOfWalls;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH & grid[row-1][column] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH & grid[row][column-1] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH & grid[row+1][column] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH & grid[row][column+1] != END ?numOfWalls+1 : numOfWalls;
 		System.out.println("Path Continues: "+ (numOfWalls!=3));
-		return numOfWalls < 3;
+		return numOfWalls < 4;
 	}
 	public boolean walledOff(int[][] grid, int[] currentRowAndCol) {
 		System.out.println("doing walled off function");
 		int row = currentRowAndCol[0];
 		int column = currentRowAndCol[1];
 		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH ? numOfWalls+1 : numOfWalls;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH ?numOfWalls+1 : numOfWalls;
+		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH & grid[row-1][column] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH & grid[row][column-1] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH & grid[row+1][column] != END ? numOfWalls+1 : numOfWalls;
+		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH & grid[row][column+1] != END ?numOfWalls+1 : numOfWalls;
 		return numOfWalls > 3;
 	}
 	
