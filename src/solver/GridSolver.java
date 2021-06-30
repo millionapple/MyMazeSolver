@@ -54,15 +54,19 @@ public class GridSolver {
 		boolean endPath = isPath(endRowAndCol, grid);
 		return startPath == true && endPath == true;
 	}
-	public boolean isPath(int[] rowAndCol, int[][] grid) {
-		int row = rowAndCol[0];
-		int column = rowAndCol[1];
+	public boolean isPath(int[] currentRowAndCol, int[][] grid) {
+		int numOfWalls = findNumberOfWalls(grid, currentRowAndCol);
+		return numOfWalls < 4;
+	}
+	public int findNumberOfWalls(int[][] grid, int[] currentRowAndCol) {
+		int row = currentRowAndCol[0];
+		int column = currentRowAndCol[1];
 		int numOfWalls = 0;
 		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH & grid[row-1][column] != END ? numOfWalls+1 : numOfWalls;
 		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH & grid[row][column-1] != END ? numOfWalls+1 : numOfWalls;
 		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH & grid[row+1][column] != END ? numOfWalls+1 : numOfWalls;
 		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH & grid[row][column+1] != END ?numOfWalls+1 : numOfWalls;
-		return numOfWalls < 4;
+		return numOfWalls;
 	}
 	
 	ArrayList<int[]> branches = new ArrayList<>();
@@ -152,26 +156,14 @@ public class GridSolver {
 		return grid;
 	}
 
-	public boolean pathContinues(int[][] grid, int[] path){
-		int row = path[0];
-		int column = path[1];
-		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH & grid[row-1][column] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH & grid[row][column-1] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH & grid[row+1][column] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH & grid[row][column+1] != END ?numOfWalls+1 : numOfWalls;
-		System.out.println("Path Continues: "+ (numOfWalls!=3));
+	public boolean pathContinues(int[][] grid, int[] currentRowAndCol){
+		int numOfWalls = findNumberOfWalls(grid, currentRowAndCol);
+		System.out.println("Path Continues: "+ (numOfWalls<4));
 		return numOfWalls < 4;
 	}
 	public boolean walledOff(int[][] grid, int[] currentRowAndCol) {
 		System.out.println("doing walled off function");
-		int row = currentRowAndCol[0];
-		int column = currentRowAndCol[1];
-		int numOfWalls = 0;
-		numOfWalls = row - 1 < 0 || grid[row-1][column] != PATH & grid[row-1][column] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column - 1 < 0 || grid[row][column-1] != PATH & grid[row][column-1] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = row +1 >= grid.length || grid[row+1][column] != PATH & grid[row+1][column] != END ? numOfWalls+1 : numOfWalls;
-		numOfWalls = column +1 >= grid[row].length || grid[row][column+1] != PATH & grid[row][column+1] != END ?numOfWalls+1 : numOfWalls;
+		int numOfWalls = findNumberOfWalls(grid, currentRowAndCol);
 		return numOfWalls > 3;
 	}
 	
@@ -187,15 +179,8 @@ public class GridSolver {
 		return end > 0;
 	}
 	public boolean pathBranches(int[][] grid, int[]currentRowAndCol) {
-		int row = currentRowAndCol[0];
-		int column = currentRowAndCol[1];
-		int paths = 0;
-		paths = row-1 >= 0 && grid[row-1][column] == PATH ? paths+1 : paths;
-		paths = column-1 >= 0 && grid[row][column-1] == PATH ? paths+1 : paths;
-		paths = row+1 < grid.length && grid[row+1][column] == PATH ? paths+1 : paths;
-		paths = column+1 < grid[row].length && grid[row][column+1] == PATH ? paths+1 : paths;
-		System.out.println(paths>1);
-		return paths > 1;
+		int numOfWalls = findNumberOfWalls(grid, currentRowAndCol);
+		return numOfWalls < 3;
 	}
 	public void addBranches(int[] currentRowAndCol) {
 		int row = currentRowAndCol[0];
